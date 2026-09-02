@@ -21,13 +21,12 @@ import { LanguageProvider } from "./utils/LanguageContext";
 import { AuthProvider, useAuth } from "./utils/AuthContext";
 
 const ProtectedRoute = () => {
-  const { user } = useAuth();
+  const { user, isAdmin } = useAuth();
   if (!user) {
     return <Navigate to="/login" replace />;
   }
   
-  const adminEmails = ["mdridoy144169@gmail.com", "admin@maxvalid.com"];
-  if (!adminEmails.includes(user.email)) {
+  if (!isAdmin) {
     return <Navigate to="/" replace />; // Not an admin
   }
   

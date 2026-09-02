@@ -13,11 +13,11 @@ export default function PublicLayout({ children }) {
   const [activeDropdown, setActiveDropdown] = useState(null);
   
   const { language, setLanguage, t } = useLanguage();
-  const { user } = useAuth();
-
+  const { user, isAdmin } = useAuth();
+  
   const handleLogout = async () => {
     await logoutUser();
-    navigate("/");
+    navigate("/login");
   };
 
   const navLinks = [
@@ -158,7 +158,7 @@ export default function PublicLayout({ children }) {
                             <p className="text-sm font-bold text-gray-800">{user.displayName || "Super Admin"}</p>
                             <p className="text-xs text-gray-500 truncate">{user.email || "admin@maxvalid.com"}</p>
                           </div>
-                          {["mdridoy144169@gmail.com", "admin@maxvalid.com"].includes(user.email) && (
+                          {isAdmin && (
                             <Link to="/admin/dashboard" className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors">
                               <LayoutDashboard size={16} /> {t("Admin Dashboard", "অ্যাডমিন ড্যাশবোর্ড")}
                             </Link>
@@ -224,7 +224,7 @@ export default function PublicLayout({ children }) {
                       <p className="text-xs text-gray-500">{user.email || "admin@maxvalid.com"}</p>
                     </div>
                   </div>
-                  {["mdridoy144169@gmail.com", "admin@maxvalid.com"].includes(user.email) && (
+                  {isAdmin && (
                     <Link to="/admin/dashboard" className="text-gray-700 font-medium px-2 py-2 hover:bg-blue-50 rounded-lg flex items-center gap-2">
                       <LayoutDashboard size={16} /> {t("Admin Dashboard", "অ্যাডমিন ড্যাশবোর্ড")}
                     </Link>

@@ -1,17 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AdminLayout from "../components/admin/AdminLayout";
 import { Plus, MoreVertical, Shield, User as UserIcon, Search, Trash2, Edit } from "lucide-react";
+import { getUsers, addUser, updateUser, deleteUser } from "../utils/storage";
 
 export default function UserManagement() {
-  const [users, setUsers] = useState(
-    Array.from({ length: 15 }, (_, i) => ({
-      id: i + 1,
-      name: i % 3 === 0 ? `Admin User ${i}` : `Staff User ${i}`,
-      email: `user${i+1}@maxvalid.com`,
-      role: i % 3 === 0 ? "Admin" : "Editor",
-      status: i % 5 === 0 ? "Inactive" : "Active"
-    }))
-  );
+  const [users, setUsers] = useState([]);
 
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -23,7 +16,16 @@ export default function UserManagement() {
 
   const itemsPerPage = 5;
 
-  const handleDelete = (id) => {
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const data = await getUsers();
+      setUsers(data);
+    };
+    fetchUsers();
+  }, []);
+
+  const handleDelete = async (id) => {
+    await deleteUser(id);
     setUsers(users.filter(u => u.id !== id));
     setOpenMenuId(null);
   };
@@ -39,19 +41,27 @@ export default function UserManagement() {
     setOpenMenuId(null);
   };
 
-  const handleSaveUser = (e) => {
+  const handleSaveUser = async (e) => {
     e.preventDefault();
     if (!currentUser.name || !currentUser.email) return;
 
     if (currentUser.id) {
       // Edit existing user
+      await updateUser(currentUser.id, currentUser);
       setUsers(users.map(u => u.id === currentUser.id ? currentUser : u));
     } else {
       // Add new user
-      setUsers([{ ...currentUser, id: Date.now() }, ...users]);
+      const newDoc = await addUser({
+        name: currentUser.name,
+        email: currentUser.email,
+        role: currentUser.role,
+        status: currentUser.status
+      });
+      setUsers([newDoc, ...users]);
     }
     
     setIsModalOpen(false);
+    setCurrentUser(null);
   };
 
   const filteredUsers = users.filter((u) =>
