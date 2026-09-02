@@ -143,7 +143,7 @@ export default function PublicLayout({ children }) {
                         <User size={14} className="text-white" />
                       </div>
                     )}
-                    <span className="font-medium text-gray-200">{user.displayName || "User"}</span>
+                    <span className="font-medium text-gray-200">{user.displayName || (user.email ? user.email.split('@')[0] : "User")}</span>
                   </button>
                   <AnimatePresence>
                     {activeDropdown === "User" && (
@@ -155,7 +155,7 @@ export default function PublicLayout({ children }) {
                       >
                         <div className="w-48 bg-white rounded-md shadow-xl py-2 border border-gray-100 relative before:content-[''] before:absolute before:-top-4 before:left-0 before:right-0 before:h-4">
                           <div className="px-4 py-2 border-b border-gray-100 mb-1">
-                            <p className="text-sm font-bold text-gray-800">{user.displayName || "User"}</p>
+                            <p className="text-sm font-bold text-gray-800">{user.displayName || (user.email ? user.email.split('@')[0] : "User")}</p>
                             <p className="text-xs text-gray-500 truncate">{user.email}</p>
                           </div>
                           <Link to="/user/dashboard" className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors">
@@ -223,7 +223,7 @@ export default function PublicLayout({ children }) {
                       </div>
                     )}
                     <div>
-                      <p className="text-sm font-bold text-gray-800">{user.displayName || "User"}</p>
+                      <p className="text-sm font-bold text-gray-800">{user.displayName || (user.email ? user.email.split('@')[0] : "User")}</p>
                       <p className="text-xs text-gray-500">{user.email}</p>
                     </div>
                   </div>
