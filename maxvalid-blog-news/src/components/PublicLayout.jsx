@@ -155,9 +155,12 @@ export default function PublicLayout({ children }) {
                       >
                         <div className="w-48 bg-white rounded-md shadow-xl py-2 border border-gray-100 relative before:content-[''] before:absolute before:-top-4 before:left-0 before:right-0 before:h-4">
                           <div className="px-4 py-2 border-b border-gray-100 mb-1">
-                            <p className="text-sm font-bold text-gray-800">{user.displayName || "Super Admin"}</p>
-                            <p className="text-xs text-gray-500 truncate">{user.email || "admin@maxvalid.com"}</p>
+                            <p className="text-sm font-bold text-gray-800">{user.displayName || "User"}</p>
+                            <p className="text-xs text-gray-500 truncate">{user.email}</p>
                           </div>
+                          <Link to="/user/dashboard" className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors">
+                            <User size={16} /> {t("User Dashboard", "ইউজার ড্যাশবোর্ড")}
+                          </Link>
                           {isAdmin && (
                             <Link to="/admin/dashboard" className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors">
                               <LayoutDashboard size={16} /> {t("Admin Dashboard", "অ্যাডমিন ড্যাশবোর্ড")}
@@ -220,10 +223,13 @@ export default function PublicLayout({ children }) {
                       </div>
                     )}
                     <div>
-                      <p className="text-sm font-bold text-gray-800">{user.displayName || "Super Admin"}</p>
-                      <p className="text-xs text-gray-500">{user.email || "admin@maxvalid.com"}</p>
+                      <p className="text-sm font-bold text-gray-800">{user.displayName || "User"}</p>
+                      <p className="text-xs text-gray-500">{user.email}</p>
                     </div>
                   </div>
+                  <Link to="/user/dashboard" className="text-gray-700 font-medium px-2 py-2 hover:bg-blue-50 rounded-lg flex items-center gap-2">
+                    <User size={16} /> {t("User Dashboard", "ইউজার ড্যাশবোর্ড")}
+                  </Link>
                   {isAdmin && (
                     <Link to="/admin/dashboard" className="text-gray-700 font-medium px-2 py-2 hover:bg-blue-50 rounded-lg flex items-center gap-2">
                       <LayoutDashboard size={16} /> {t("Admin Dashboard", "অ্যাডমিন ড্যাশবোর্ড")}

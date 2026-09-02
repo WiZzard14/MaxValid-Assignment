@@ -9,6 +9,7 @@ export default function Login() {
   const { user } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -46,7 +47,7 @@ export default function Login() {
         const nameFromEmail = email.split("@")[0];
         
         await updateProfile(userCredential.user, {
-          displayName: nameFromEmail.charAt(0).toUpperCase() + nameFromEmail.slice(1)
+          displayName: name || (nameFromEmail.charAt(0).toUpperCase() + nameFromEmail.slice(1))
         });
         
         navigate("/");
@@ -73,6 +74,16 @@ export default function Login() {
         {error && <p className="text-red-500 text-sm text-center mb-4 bg-red-50 p-2 rounded">{error}</p>}
 
         <form onSubmit={handleEmailLogin} className="space-y-4 mb-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Full Name (Optional)</label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full p-3 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-100"
+              placeholder="Riadul Islam (Only for new accounts)"
+            />
+          </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
             <input

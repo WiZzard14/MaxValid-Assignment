@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import UserManagement from "./pages/UserManagement";
 import SettingManagement from "./pages/SettingManagement";
+import UserDashboard from "./pages/UserDashboard";
 import Home from "./pages/Home";
 import Causes from "./pages/Causes";
 import Events from "./pages/Events";
@@ -27,9 +28,17 @@ const ProtectedRoute = () => {
   }
   
   if (!isAdmin) {
-    return <Navigate to="/" replace />; // Not an admin
+    return <Navigate to="/user/dashboard" replace />; // Redirect non-admins to user dashboard
   }
   
+  return <Outlet />;
+};
+
+const UserProtectedRoute = () => {
+  const { user } = useAuth();
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
   return <Outlet />;
 };
 
@@ -52,6 +61,10 @@ function App() {
           <Route path="/terms" element={<TermsOfService />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/login" element={<Login />} />
+          
+          <Route element={<UserProtectedRoute />}>
+            <Route path="/user/dashboard" element={<UserDashboard />} />
+          </Route>
           
           <Route element={<ProtectedRoute />}>
             <Route path="/admin/dashboard" element={<Dashboard />} />
