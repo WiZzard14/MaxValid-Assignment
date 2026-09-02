@@ -1,16 +1,59 @@
-# React + Vite
+# MaxValid Blog & News Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+## 📌 Project Overview
+A responsive and accessible frontend web application for managing and displaying blogs and news. Developed as an internship assignment for MaxValid.
 
-Currently, two official plugins are available:
+## ✨ Features
+- **Public Blog Page:** Responsive layout with hero banner, category filter, and interactive article grid.
+- **Admin Dashboard:** Management table with search and pagination functionalities.
+- **Create Content Form:** Form validation and rich image upload modal.
+- **Fluid Animations:** Subtle interactions using Motion for React.
+- **Responsive Design:** Optimized for Desktop, Tablet, and Mobile views.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🛠 Technology Stack
+- **Frontend Framework:** React (Vite)
+- **Routing:** React Router v7
+- **Styling:** Tailwind CSS v4
+- **Icons:** Lucide React
+- **Animations:** Motion for React
+- **Deployment:** Vercel
 
-## React Compiler
+## 🚀 Installation Command
+```bash
+npm install
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 💻 How to run locally
+```bash
+npm run dev
+```
+Open `http://localhost:5173` in your browser.
 
-## Expanding the Oxlint configuration
+## 📂 Project Structure
+```text
+src/
+├── components/
+│   ├── admin/      # Admin layout components
+│   └── public/     # Public components
+├── data/           # Mock data storage
+├── pages/          # Application views (Public, Admin, Create)
+├── App.jsx         # Routing configuration
+└── main.jsx        # Entry point
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+## 🔗 Live Demo Link
+[Your Vercel Link Here]
+
+## 📱 Responsive Support
+- Mobile (320px - 425px): Full-width search, compact navbar, stacked grid.
+- Tablet (768px): 2-column content layout.
+- Desktop (1024px+): 3-column article grid and comprehensive admin layouts.
+
+## 🎨 Animation Details
+- Fade-in on page load.
+- Hover lift effect on article cards.
+- Modal fade and scale interactions.
+
+## ⚠️ Known Limitations
+- Data is mocked and currently does not persist across hard reloads (No backend API integration).
+- Rich text editor toolbar is for visual representation only.
