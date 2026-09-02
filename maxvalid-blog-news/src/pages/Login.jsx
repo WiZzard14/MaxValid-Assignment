@@ -40,9 +40,15 @@ export default function Login() {
     } catch (err) {
       // For demo purposes: If login fails (user doesn't exist), try to auto-create the account!
       try {
-        const { createUserWithEmailAndPassword } = await import("firebase/auth");
+        const { createUserWithEmailAndPassword, updateProfile } = await import("firebase/auth");
         const { auth } = await import("../utils/firebase");
-        await createUserWithEmailAndPassword(auth, email, password);
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const nameFromEmail = email.split("@")[0];
+        
+        await updateProfile(userCredential.user, {
+          displayName: nameFromEmail.charAt(0).toUpperCase() + nameFromEmail.slice(1)
+        });
+        
         navigate("/");
       } catch (signupErr) {
         setError("Invalid email or password. Password must be at least 6 characters.");

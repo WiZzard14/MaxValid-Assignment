@@ -22,7 +22,11 @@ export function AuthProvider({ children }) {
           // Check if admin added them in Firestore
           try {
             const q = query(collection(db, "users"), where("email", "==", currentUser.email), where("role", "==", "Admin"));
-            const querySnapshot = await getDocs(q);
+            
+            // Add a 2-second timeout to prevent the app from hanging if Firestore is disabled
+            const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error("Firestore timeout")), 2000));
+            const querySnapshot = await Promise.race([getDocs(q), timeoutPromise]);
+            
             setIsAdmin(!querySnapshot.empty);
           } catch (error) {
             console.error("Error checking admin status:", error);
@@ -41,7 +45,13 @@ export function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider value={{ user, isAdmin, loading }}>
-      {!loading && children}
+      {loading ? (
+        <div className="min-h-screen flex items-center justify-center bg-gray-50">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        </div>
+      ) : (
+        children
+      )}
     </AuthContext.Provider>
   );
 }
