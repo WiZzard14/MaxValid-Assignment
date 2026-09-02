@@ -1,34 +1,40 @@
+import { collection, getDocs, addDoc, deleteDoc, doc } from "firebase/firestore";
+import { db } from "./firebase";
 import { blogPosts as initialPosts } from "../data/mockData";
 
-export const getPosts = () => {
-  const stored = localStorage.getItem("maxvalid_posts");
-  if (stored) {
-    const parsed = JSON.parse(stored);
-    if (parsed.length === 16 && parsed[0].category === "Blood Donation") return parsed;
+export const getPosts = async () => {
+  try {
+    const querySnapshot = await getDocs(collection(db, "posts"));
+    if (querySnapshot.empty) {
+      // Seed the database if empty
+      for (const post of initialPosts) {
+        await addDoc(collection(db, "posts"), post);
+      }
+      const refetched = await getDocs(collection(db, "posts"));
+      return refetched.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+    }
+    return querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+  } catch (error) {
+    console.error("Error fetching posts", error);
+    return initialPosts; // fallback
   }
-  localStorage.setItem("maxvalid_posts", JSON.stringify(initialPosts));
-  return initialPosts;
 };
 
-export const addPost = (post) => {
-  const posts = getPosts();
-  const newPost = {
-    ...post,
-    id: Date.now(),
-    date: new Date().toLocaleDateString("en-US", {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-    }),
-  };
-  const updatedPosts = [newPost, ...posts];
-  localStorage.setItem("maxvalid_posts", JSON.stringify(updatedPosts));
-  return updatedPosts;
+export const addPost = async (post) => {
+  try {
+    const docRef = await addDoc(collection(db, "posts"), post);
+    return { ...post, id: docRef.id };
+  } catch (error) {
+    console.error("Error adding post", error);
+    throw error;
+  }
 };
 
-export const deletePost = (id) => {
-  const posts = getPosts();
-  const updatedPosts = posts.filter(post => post.id !== id);
-  localStorage.setItem("maxvalid_posts", JSON.stringify(updatedPosts));
-  return updatedPosts;
+export const deletePost = async (id) => {
+  try {
+    await deleteDoc(doc(db, "posts", id));
+  } catch (error) {
+    console.error("Error deleting post", error);
+    throw error;
+  }
 };

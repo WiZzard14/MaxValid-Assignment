@@ -17,44 +17,53 @@ import Careers from "./pages/Careers";
 import Contact from "./pages/Contact";
 import TermsOfService from "./pages/TermsOfService";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
-import { isAuthenticated } from "./utils/auth";
 import { LanguageProvider } from "./utils/LanguageContext";
+import { AuthProvider, useAuth } from "./utils/AuthContext";
 
 const ProtectedRoute = () => {
-  if (!isAuthenticated()) {
+  const { user } = useAuth();
+  if (!user) {
     return <Navigate to="/login" replace />;
   }
+  
+  const adminEmails = ["mdridoy144169@gmail.com", "admin@maxvalid.com"];
+  if (!adminEmails.includes(user.email)) {
+    return <Navigate to="/" replace />; // Not an admin
+  }
+  
   return <Outlet />;
 };
 
 function App() {
   return (
     <LanguageProvider>
-      <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/causes" element={<Causes />} />
-        <Route path="/events" element={<Events />} />
-        <Route path="/about" element={<AboutUs />} />
-        <Route path="/gallery" element={<Gallery />} />
-        <Route path="/blog" element={<PublicBlog />} />
-        <Route path="/partnership" element={<Partnership />} />
-        <Route path="/donate" element={<Donate />} />
-        <Route path="/careers" element={<Careers />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/terms" element={<TermsOfService />} />
-        <Route path="/privacy" element={<PrivacyPolicy />} />
-        <Route path="/login" element={<Login />} />
-        
-        <Route element={<ProtectedRoute />}>
-          <Route path="/admin/dashboard" element={<Dashboard />} />
-          <Route path="/admin/users" element={<UserManagement />} />
-          <Route path="/admin/settings" element={<SettingManagement />} />
-          <Route path="/admin/blogs" element={<AdminBlogManagement />} />
-          <Route path="/admin/blogs/new" element={<CreateNewBlog />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+      <AuthProvider>
+        <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/causes" element={<Causes />} />
+          <Route path="/events" element={<Events />} />
+          <Route path="/about" element={<AboutUs />} />
+          <Route path="/gallery" element={<Gallery />} />
+          <Route path="/blog" element={<PublicBlog />} />
+          <Route path="/partnership" element={<Partnership />} />
+          <Route path="/donate" element={<Donate />} />
+          <Route path="/careers" element={<Careers />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/terms" element={<TermsOfService />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/login" element={<Login />} />
+          
+          <Route element={<ProtectedRoute />}>
+            <Route path="/admin/dashboard" element={<Dashboard />} />
+            <Route path="/admin/users" element={<UserManagement />} />
+            <Route path="/admin/settings" element={<SettingManagement />} />
+            <Route path="/admin/blogs" element={<AdminBlogManagement />} />
+            <Route path="/admin/blogs/new" element={<CreateNewBlog />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+      </AuthProvider>
     </LanguageProvider>
   );
 }

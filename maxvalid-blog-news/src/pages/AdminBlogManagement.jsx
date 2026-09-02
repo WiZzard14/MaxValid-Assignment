@@ -13,11 +13,16 @@ export default function AdminBlogManagement() {
   const itemsPerPage = 5;
 
   useEffect(() => {
-    setPosts(getPosts());
+    const fetchPosts = async () => {
+      const data = await getPosts();
+      setPosts(data);
+    };
+    fetchPosts();
   }, []);
 
-  const handleDelete = (id) => {
-    setPosts(deletePost(id));
+  const handleDelete = async (id) => {
+    await deletePost(id);
+    setPosts(posts.filter(p => p.id !== id));
     setOpenMenuId(null);
   };
 

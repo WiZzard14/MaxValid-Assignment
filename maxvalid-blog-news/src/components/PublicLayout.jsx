@@ -2,7 +2,8 @@ import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Box, ChevronDown, User, LayoutDashboard, LogOut, Menu } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
-import { isAuthenticated, logout } from "../utils/auth";
+import { useAuth } from "../utils/AuthContext";
+import { logoutUser } from "../utils/firebase";
 import { useLanguage } from "../utils/LanguageContext";
 
 export default function PublicLayout({ children }) {
@@ -12,10 +13,10 @@ export default function PublicLayout({ children }) {
   const [activeDropdown, setActiveDropdown] = useState(null);
   
   const { language, setLanguage, t } = useLanguage();
-  const user = isAuthenticated();
+  const { user } = useAuth();
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await logoutUser();
     navigate("/");
   };
 
@@ -134,9 +135,15 @@ export default function PublicLayout({ children }) {
                   onMouseEnter={() => setActiveDropdown("User")}
                   onMouseLeave={() => setActiveDropdown(null)}
                 >
-                  <button className="flex items-center gap-2 px-5 py-2 border border-white/30 text-gray-200 rounded-full hover:bg-white/10 hover:text-white transition-all font-semibold">
-                    <User size={16} />
-                    {t("Super", "সুপার")}
+                  <button className="flex items-center gap-2 px-3 py-1.5 rounded-full hover:bg-white/10 transition-colors">
+                    {user.photoURL ? (
+                      <img src={user.photoURL} alt={user.displayName} className="w-7 h-7 rounded-full object-cover" />
+                    ) : (
+                      <div className="w-7 h-7 rounded-full bg-[#00a8ff] flex items-center justify-center">
+                        <User size={14} className="text-white" />
+                      </div>
+                    )}
+                    <span className="font-medium text-gray-200">{user.displayName || "User"}</span>
                   </button>
                   <AnimatePresence>
                     {activeDropdown === "User" && (
@@ -144,16 +151,18 @@ export default function PublicLayout({ children }) {
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 10 }}
-                        className="absolute top-[100%] right-0 pt-4 z-50"
+                        className="absolute top-[100%] right-0 pt-4"
                       >
                         <div className="w-48 bg-white rounded-md shadow-xl py-2 border border-gray-100 relative before:content-[''] before:absolute before:-top-4 before:left-0 before:right-0 before:h-4">
                           <div className="px-4 py-2 border-b border-gray-100 mb-1">
-                            <p className="text-sm font-bold text-gray-800">{t("Super Admin", "সুপার অ্যাডমিন")}</p>
-                            <p className="text-xs text-gray-500 truncate">admin@maxvalid.com</p>
+                            <p className="text-sm font-bold text-gray-800">{user.displayName || "Super Admin"}</p>
+                            <p className="text-xs text-gray-500 truncate">{user.email || "admin@maxvalid.com"}</p>
                           </div>
-                          <Link to="/admin/dashboard" className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors">
-                            <LayoutDashboard size={16} /> {t("Admin Dashboard", "অ্যাডমিন ড্যাশবোর্ড")}
-                          </Link>
+                          {["mdridoy144169@gmail.com", "admin@maxvalid.com"].includes(user.email) && (
+                            <Link to="/admin/dashboard" className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors">
+                              <LayoutDashboard size={16} /> {t("Admin Dashboard", "অ্যাডমিন ড্যাশবোর্ড")}
+                            </Link>
+                          )}
                           <button onClick={handleLogout} className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
                             <LogOut size={16} /> {t("Sign Out", "লগআউট")}
                           </button>
@@ -202,13 +211,24 @@ export default function PublicLayout({ children }) {
               <div className="border-t border-gray-100 my-2"></div>
               {user ? (
                 <>
-                  <div className="px-2 py-2">
-                    <p className="text-sm font-bold text-gray-800">{t("Super Admin", "সুপার অ্যাডমিন")}</p>
-                    <p className="text-xs text-gray-500">admin@maxvalid.com</p>
+                  <div className="px-2 py-2 flex items-center gap-3">
+                    {user.photoURL ? (
+                      <img src={user.photoURL} alt={user.displayName} className="w-10 h-10 rounded-full object-cover" />
+                    ) : (
+                      <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                        <User size={20} />
+                      </div>
+                    )}
+                    <div>
+                      <p className="text-sm font-bold text-gray-800">{user.displayName || "Super Admin"}</p>
+                      <p className="text-xs text-gray-500">{user.email || "admin@maxvalid.com"}</p>
+                    </div>
                   </div>
-                  <Link to="/admin/dashboard" className="text-gray-700 font-medium px-2 py-2 hover:bg-blue-50 rounded-lg flex items-center gap-2">
-                    <LayoutDashboard size={16} /> {t("Admin Dashboard", "অ্যাডমিন ড্যাশবোর্ড")}
-                  </Link>
+                  {["mdridoy144169@gmail.com", "admin@maxvalid.com"].includes(user.email) && (
+                    <Link to="/admin/dashboard" className="text-gray-700 font-medium px-2 py-2 hover:bg-blue-50 rounded-lg flex items-center gap-2">
+                      <LayoutDashboard size={16} /> {t("Admin Dashboard", "অ্যাডমিন ড্যাশবোর্ড")}
+                    </Link>
+                  )}
                   <button onClick={handleLogout} className="text-red-600 font-medium px-2 py-2 hover:bg-red-50 rounded-lg flex items-center gap-2 text-left">
                     <LogOut size={16} /> {t("Sign Out", "লগআউট")}
                   </button>

@@ -1,21 +1,31 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { login } from "../utils/auth";
+import { useNavigate, Navigate } from "react-router-dom";
+import { loginWithGoogle } from "../utils/firebase";
+import { useAuth } from "../utils/AuthContext";
 import { motion } from "motion/react";
 
 export default function Login() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("admin@maxvalid.com");
-  const [password, setPassword] = useState("admin123");
+  const { user } = useAuth();
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (login(email, password)) {
-      navigate("/admin/blogs");
-    } else {
-      setError("Invalid credentials");
+  // If already logged in, redirect to home
+  if (user) {
+    return <Navigate to="/" replace />;
+  }
+
+  const handleGoogleLogin = async () => {
+    setLoading(true);
+    setError("");
+    try {
+      await loginWithGoogle();
+      navigate("/");
+    } catch (err) {
+      setError("Failed to sign in with Google. Please try again.");
+      console.error(err);
     }
+    setLoading(false);
   };
 
   return (
@@ -30,39 +40,20 @@ export default function Login() {
           <p className="text-gray-500 text-sm mt-2">Sign in to manage blog & news content</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="w-full p-3 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-100"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className="w-full p-3 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-100"
-            />
-          </div>
-
-          {error && <p className="text-red-500 text-sm">{error}</p>}
+        <div className="space-y-5">
+          {error && <p className="text-red-500 text-sm text-center">{error}</p>}
 
           <button
-            type="submit"
-            className="w-full py-3 bg-[#172033] text-white rounded-md font-medium hover:bg-gray-800 transition-colors"
+            onClick={handleGoogleLogin}
+            disabled={loading}
+            className="w-full flex items-center justify-center gap-3 py-3 bg-white border border-gray-300 text-gray-700 rounded-md font-medium hover:bg-gray-50 transition-colors shadow-sm disabled:opacity-50"
           >
-            Sign In
+            <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" className="w-5 h-5" />
+            {loading ? "Signing in..." : "Sign in with Google"}
           </button>
-        </form>
+        </div>
         
-        <div className="mt-6 text-center">
+        <div className="mt-8 pt-6 border-t border-gray-100 text-center">
           <a href="/blog" className="text-sm text-blue-500 hover:underline">Back to Public Site</a>
         </div>
       </motion.div>

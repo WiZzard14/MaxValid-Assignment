@@ -23,15 +23,27 @@ export default function CreateNewBlog() {
     }
   };
 
-  const handleFileChange = (event) => {
-    const file = event.target.files?.[0];
+  const handleFileChange = (file) => {
     if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        alert("Image must be smaller than 5MB");
+        return;
+      }
       setSelectedImage(URL.createObjectURL(file));
       setIsUploadOpen(false);
     }
   };
 
-  const handleSubmit = (e) => {
+  const onDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  const onDrop = (e) => {
+    e.preventDefault();
+    handleFileChange(e.dataTransfer.files?.[0]);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = {};
     if (!formData.title.trim()) newErrors.title = "Content Title is required.";
@@ -46,16 +58,22 @@ export default function CreateNewBlog() {
     tempDiv.innerHTML = formData.body;
     const plainText = tempDiv.textContent || tempDiv.innerText || "";
     
-    addPost({
-      title: formData.title,
-      excerpt: plainText.substring(0, 100) + (plainText.length > 100 ? "..." : ""),
-      category: formData.tags ? formData.tags.split(",")[0].trim() : "Uncategorized",
-      image: selectedImage || "https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      featured: false,
-      sourceLink: "#"
-    });
-    
-    navigate("/admin/blogs");
+    try {
+      await addPost({
+        title: formData.title,
+        body: formData.body,
+        excerpt: plainText.substring(0, 150) + (plainText.length > 150 ? "..." : ""),
+        date: new Date().toLocaleDateString("en-US", { month: "short", day: "2-digit", year: "numeric" }),
+        category: formData.tags ? formData.tags.split(",")[0].trim() : "Updates",
+        image: selectedImage || "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+        featured: false,
+        sourceLink: "#"
+      });
+      navigate("/admin/blogs");
+    } catch (error) {
+      console.error("Error creating post", error);
+      alert("Failed to create post. Check console for details.");
+    }
   };
 
   return (

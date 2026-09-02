@@ -14,7 +14,11 @@ export default function PublicBlog() {
   const itemsPerPage = 6;
 
   useEffect(() => {
-    setPosts(getPosts());
+    const fetchPosts = async () => {
+      const data = await getPosts();
+      setPosts(data);
+    };
+    fetchPosts();
   }, []);
 
   const dummyCategories = [

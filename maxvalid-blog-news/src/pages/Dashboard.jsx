@@ -9,12 +9,15 @@ export default function Dashboard() {
   const [recentPosts, setRecentPosts] = useState([]);
 
   useEffect(() => {
-    const posts = getPosts();
-    const uniqueCats = new Set(posts.map(p => p.category)).size;
-    const featuredCount = posts.filter(p => p.featured).length;
+    const fetchStats = async () => {
+      const posts = await getPosts();
+      const uniqueCats = new Set(posts.map(p => p.category)).size;
+      const featuredCount = posts.filter(p => p.featured).length;
 
-    setStats({ total: posts.length, categories: uniqueCats, featured: featuredCount });
-    setRecentPosts(posts.slice(0, 4));
+      setStats({ total: posts.length, categories: uniqueCats, featured: featuredCount });
+      setRecentPosts(posts.slice(0, 4));
+    };
+    fetchStats();
   }, []);
 
   const cards = [
