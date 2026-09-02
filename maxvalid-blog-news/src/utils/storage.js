@@ -1,4 +1,4 @@
-import { collection, getDocs, addDoc, deleteDoc, doc } from "firebase/firestore";
+import { collection, getDocs, addDoc, deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { db } from "./firebase";
 import { blogPosts as initialPosts } from "../data/mockData";
 
@@ -26,6 +26,15 @@ export const addPost = async (post) => {
     return { ...post, id: docRef.id };
   } catch (error) {
     console.error("Error adding post", error);
+    throw error;
+  }
+};
+
+export const updatePost = async (id, updatedData) => {
+  try {
+    await updateDoc(doc(db, "posts", id), updatedData);
+  } catch (error) {
+    console.error("Error updating post", error);
     throw error;
   }
 };

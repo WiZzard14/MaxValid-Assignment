@@ -86,10 +86,11 @@ export default function CreateNewBlog() {
         <div className="bg-white rounded-md shadow-sm border border-gray-100 p-6">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="titleInput" className="block text-sm font-medium text-gray-700 mb-1">
                 Content Title <span className="text-red-500">*</span>
               </label>
               <input
+                id="titleInput"
                 type="text"
                 name="title"
                 value={formData.title}
@@ -110,6 +111,7 @@ export default function CreateNewBlog() {
                 <div className="bg-gray-50 p-2 border-b border-gray-200 flex gap-2">
                   <button 
                     type="button" 
+                    aria-label="Bold text"
                     onMouseDown={(e) => e.preventDefault()}
                     onClick={() => document.execCommand('bold', false, null)}
                     className="font-bold text-gray-600 px-3 py-1 hover:bg-gray-200 rounded"
@@ -118,6 +120,7 @@ export default function CreateNewBlog() {
                   </button>
                   <button 
                     type="button"
+                    aria-label="Italic text"
                     onMouseDown={(e) => e.preventDefault()}
                     onClick={() => document.execCommand('italic', false, null)} 
                     className="italic text-gray-600 px-3 py-1 hover:bg-gray-200 rounded"
@@ -126,6 +129,7 @@ export default function CreateNewBlog() {
                   </button>
                   <button 
                     type="button"
+                    aria-label="Underline text"
                     onMouseDown={(e) => e.preventDefault()}
                     onClick={() => document.execCommand('underline', false, null)} 
                     className="underline text-gray-600 px-3 py-1 hover:bg-gray-200 rounded"
@@ -135,6 +139,7 @@ export default function CreateNewBlog() {
                 </div>
                 <div
                   contentEditable
+                  aria-label="Content Body"
                   className="w-full p-4 min-h-[200px] focus:outline-none focus:bg-blue-50/10"
                   onInput={(e) => {
                     const newHtml = e.currentTarget.innerHTML;
@@ -155,8 +160,9 @@ export default function CreateNewBlog() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Tags</label>
+              <label htmlFor="tagsInput" className="block text-sm font-medium text-gray-700 mb-1">Tags</label>
               <input
+                id="tagsInput"
                 type="text"
                 name="tags"
                 value={formData.tags}
@@ -173,6 +179,7 @@ export default function CreateNewBlog() {
                   <img src={selectedImage} alt="Preview" className="w-full h-full object-cover" />
                   <button
                     type="button"
+                    aria-label="Remove image"
                     onClick={() => setSelectedImage(null)}
                     className="absolute top-1 right-1 bg-white rounded-full p-1 shadow-sm text-red-500 hover:bg-gray-100"
                   >
@@ -223,13 +230,18 @@ export default function CreateNewBlog() {
                 <h3 className="font-semibold text-lg text-gray-800">Upload Image</h3>
                 <button
                   onClick={() => setIsUploadOpen(false)}
+                  aria-label="Close upload modal"
                   className="text-gray-400 hover:text-gray-600"
                 >
                   <X size={20} />
                 </button>
               </div>
               <div className="p-6">
-                <div className="border-2 border-dashed border-gray-200 rounded-lg p-8 flex flex-col items-center justify-center text-center bg-gray-50/50">
+                <div 
+                  onDragOver={onDragOver}
+                  onDrop={onDrop}
+                  className="border-2 border-dashed border-gray-200 rounded-lg p-8 flex flex-col items-center justify-center text-center bg-gray-50/50 hover:bg-gray-100 transition-colors"
+                >
                   <UploadCloud size={48} className="text-gray-400 mb-4" />
                   <p className="text-sm font-medium text-gray-700 mb-1">
                     Choose a file or drag & drop it here
@@ -239,14 +251,16 @@ export default function CreateNewBlog() {
                   </p>
                   <div className="relative">
                     <input
+                      id="fileUpload"
+                      title="Upload Image"
                       type="file"
                       accept="image/jpeg,image/png,image/webp"
-                      onChange={handleFileChange}
+                      onChange={(e) => handleFileChange(e.target.files?.[0])}
                       className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                     />
-                    <button type="button" className="px-4 py-2 bg-white border border-gray-200 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50">
+                    <label htmlFor="fileUpload" className="px-4 py-2 bg-white border border-gray-200 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 cursor-pointer block">
                       Browse File
-                    </button>
+                    </label>
                   </div>
                 </div>
               </div>

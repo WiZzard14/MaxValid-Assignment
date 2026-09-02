@@ -53,7 +53,10 @@ export default function PublicBlog() {
             type="text"
             placeholder="Blog search"
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+              setCurrentPage(1);
+            }}
             className="w-full pl-12 pr-4 py-4 border border-gray-200 rounded-lg bg-gray-50/50 focus:outline-none focus:ring-2 focus:ring-blue-100 text-sm"
           />
         </div>
@@ -65,7 +68,18 @@ export default function PublicBlog() {
             {(() => {
               const featured = posts.find(p => p.featured);
               return (
-                <div onClick={() => setSelectedPost(featured)} className="bg-white border border-gray-100 rounded-xl overflow-hidden flex flex-col md:flex-row group hover:shadow-lg transition-shadow cursor-pointer">
+                <div 
+                  onClick={() => setSelectedPost(featured)} 
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setSelectedPost(featured);
+                    }
+                  }}
+                  className="bg-white border border-gray-100 rounded-xl overflow-hidden flex flex-col md:flex-row group hover:shadow-lg transition-shadow cursor-pointer"
+                >
                   <div className="md:w-[55%] h-64 md:h-auto bg-gray-200 relative">
                     {featured.image && <img src={featured.image} alt={featured.title} className="absolute inset-0 w-full h-full object-cover" />}
                   </div>
@@ -110,6 +124,14 @@ export default function PublicBlog() {
                   <motion.article
                     key={post.id}
                     onClick={() => setSelectedPost(post)}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        setSelectedPost(post);
+                      }
+                    }}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -210,8 +232,11 @@ export default function PublicBlog() {
                 <h2 className="text-3xl font-bold text-gray-800 mb-6 leading-tight">{selectedPost.title}</h2>
                 
                 <div className="prose max-w-none text-gray-600 leading-relaxed space-y-4 text-lg">
-                  <p>{selectedPost.excerpt}</p>
-                  <p>In a complete system, this area would dynamically fetch the full HTML content from the rich text editor of the admin panel. For this demo, it displays the excerpt expanded.</p>
+                  {selectedPost.body ? (
+                    <div dangerouslySetInnerHTML={{ __html: selectedPost.body }} />
+                  ) : (
+                    <p>{selectedPost.excerpt}</p>
+                  )}
                 </div>
                 
                 {selectedPost.sourceLink && selectedPost.sourceLink !== "#" && (

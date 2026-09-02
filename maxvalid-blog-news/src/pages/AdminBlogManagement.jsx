@@ -2,13 +2,14 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Search, Plus, MoreVertical, ExternalLink, Trash2, Edit } from "lucide-react";
 import AdminLayout from "../components/admin/AdminLayout";
-import { getPosts, deletePost } from "../utils/storage";
+import { getPosts, deletePost, updatePost } from "../utils/storage";
 
 export default function AdminBlogManagement() {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [posts, setPosts] = useState([]);
   const [openMenuId, setOpenMenuId] = useState(null);
+  const [editPost, setEditPost] = useState(null);
   
   const itemsPerPage = 5;
 
@@ -24,6 +25,19 @@ export default function AdminBlogManagement() {
     await deletePost(id);
     setPosts(posts.filter(p => p.id !== id));
     setOpenMenuId(null);
+  };
+
+  const handleEditSubmit = async (e) => {
+    e.preventDefault();
+    if (!editPost) return;
+    try {
+      await updatePost(editPost.id, { title: editPost.title });
+      setPosts(posts.map(p => p.id === editPost.id ? { ...p, title: editPost.title } : p));
+      setEditPost(null);
+    } catch (error) {
+      console.error(error);
+      alert("Failed to update post");
+    }
   };
 
   const filteredPosts = posts.filter((post) =>
@@ -121,7 +135,10 @@ export default function AdminBlogManagement() {
                         </button>
                         {openMenuId === post.id && (
                           <div className="absolute right-6 top-10 w-32 bg-white border border-gray-100 shadow-md rounded-md z-10 py-1 overflow-hidden">
-                            <button className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2">
+                            <button 
+                              onClick={() => { setEditPost(post); setOpenMenuId(null); }}
+                              className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2"
+                            >
                               <Edit size={14} /> Edit
                             </button>
                             <button 
@@ -186,6 +203,42 @@ export default function AdminBlogManagement() {
           </div>
         )}
       </div>
+
+      {/* Edit Modal */}
+      {editPost && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
+          <div className="bg-white rounded-lg p-6 w-full max-w-lg shadow-xl relative">
+            <h3 className="text-xl font-bold mb-4">Edit Content</h3>
+            <form onSubmit={handleEditSubmit} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
+                <input
+                  type="text"
+                  value={editPost.title}
+                  onChange={(e) => setEditPost({...editPost, title: e.target.value})}
+                  className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                  required
+                />
+              </div>
+              <div className="flex justify-end gap-2 pt-4">
+                <button
+                  type="button"
+                  onClick={() => setEditPost(null)}
+                  className="px-4 py-2 border border-gray-300 rounded hover:bg-gray-50"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                >
+                  Save Changes
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </AdminLayout>
   );
 }
