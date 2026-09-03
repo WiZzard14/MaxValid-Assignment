@@ -1,66 +1,93 @@
-# MaxValid Blog & News Platform
+# MaxValid Blog & News Portal
 
-## 🚀 Project Overview
-A fully functional, responsive, and accessible full-stack web application for managing and displaying blogs, news, and community events. Developed as an internship assignment for MaxValid.
+A modern, responsive, and fully functional Blog and News Management platform built with React, Tailwind CSS, and Firebase. This project includes a public-facing blog, a user dashboard for saved articles, and a comprehensive Admin Panel for content and user management.
 
-## ✨ Features
-- **Real-time Database:** Powered by Firebase Firestore for persistent data storage across sessions.
-- **Google Authentication:** Secure Firebase OAuth login restricted to specific admin roles.
-- **Public Blog Page:** Responsive layout with hero banner, category filter, dynamic search, and interactive full-screen article modal.
-- **Admin Dashboard:** Management table with search, pagination, dynamic Edit, and Delete functionalities.
-- **Create Content Form:** Form validation, Rich text body editor, and drag & drop image upload with 5MB validation limit.
-- **Fluid Animations:** Subtle interactions using Motion for React.
-- **Accessibility:** Fully keyboard navigable (tabIndex, onKeyDown) and screen-reader friendly (aria-labels).
-- **Responsive Design:** Optimized for Desktop, Tablet, and Mobile views, including a mobile hamburger menu for the Admin panel.
+## 🚀 Live Demo
+**[https://max-valid-assignment-s2zo.vercel.app/]**
 
-## 💻 Technology Stack
-- **Frontend Framework:** React 19 (Vite)
-- **Backend Services:** Firebase (Auth & Firestore)
-- **Routing:** React Router v7
-- **Styling:** Tailwind CSS v4
-- **Icons:** Lucide React
-- **Animations:** Motion for React
-- **Deployment:** Vercel
+---
 
-## 📦 Installation Command
-```bash
-npm install
-```
+## 🔑 Demo Credentials (Admin)
+To evaluate the Admin features, you can log in using the following credentials:
+- **Email:** `admin@example.com`
+- **Password:** `admin123`
+> *(Note to developer: Make sure you have created this user in your Firebase Auth and added them to the Firestore `users` collection with the Role set to "Admin")*
 
-## 🚀 How to run locally
-```bash
-npm run dev
-```
-Open `http://localhost:5173` in your browser.
+---
 
-## 📁 Project Structure
-```text
-src/
-├── components/
-│   ├── admin/      # Admin layout & mobile navigation
-│   └── public/     # Public components (Layouts)
-├── pages/          # Application views (Public, Admin, Create, Login)
-├── utils/          # Storage, Firebase config, AuthContext
-├── App.jsx         # Routing configuration & Route Protection
-└── main.jsx        # Entry point
-```
+## ✨ Key Features
 
-## 🌐 Live Demo Link
-👉 **[Insert your Vercel URL here after deployment]**
+### 1. Authentication & Role-Based Access Control (RBAC)
+- **Login/Signup:** Supports both standard Email/Password authentication and **Google Login**.
+- **Role Detection:** Automatically routes users based on their role (Admin vs. Standard User).
+- **Protected Routes:** Admin pages are strictly protected and inaccessible to normal users.
 
-## 📸 Screenshots
-### Public Blog View
-*(Upload a screenshot here on GitHub: `![Public Blog View](./docs/public-blog.png)`)*
+### 2. Public Blog Portal
+- **Dynamic Content:** Fetches articles in real-time from Firestore, sorting newest first.
+- **Search & Filter:** Instantly search articles by title or filter them by category.
+- **Save Articles:** Users can bookmark/save articles to their personal account.
+- **Immersive Reading:** Articles open in a beautiful, animated full-screen modal (Framer Motion).
 
-### Admin Dashboard View
-*(Upload a screenshot here on GitHub: `![Admin Dashboard](./docs/admin-dashboard.png)`)*
+### 3. User Dashboard
+- **Personalized View:** Standard users have their own dashboard displaying their name, profile picture, and email.
+- **Saved Articles Counter:** Dynamically shows how many articles the user has bookmarked.
+- **Edit Profile:** Users can update their Full Name and Profile Picture URL, syncing instantly with Firebase Auth.
 
-## 📱 Responsive Support
-- **Mobile (320px - 425px):** Full-width search, compact navbar, stacked grid, hidden sidebar behind hamburger menu.
-- **Tablet (768px):** 2-column content layout.
-- **Desktop (1024px+):** 3-column article grid and comprehensive admin layouts.
+### 4. Admin Dashboard
+- **Analytics Overview:** Displays total articles, categories, and recently published content.
+- **Blog Management (CRUD):** Admins can Create, Read, Update, and Delete blog posts. Includes image URL support and a rich text editor placeholder.
+- **User Management (CRUD):** Admins can manually add new users, edit existing roles (Admin, Editor, Author), and update active status.
+- **Settings Management:** Multi-language toggle (English/Bengali) implemented seamlessly using Context API.
 
-## 🎨 Animation Details
-- Fade-in and scale on page loads.
-- Hover lift effect on article cards with layout persistence.
-- Modal fade and scale interactions for Auth, Lightbox, and Article reading.
+### 5. UI/UX Enhancements
+- **Toast Notifications:** Professional pop-up notifications (React Hot Toast) for all actions (saving, deleting, editing, errors).
+- **Smooth Animations:** Built with `motion/react` for fluid page transitions and hover effects.
+- **Responsive Design:** 100% Mobile-first and fully responsive across all devices (Tailwind CSS).
+
+---
+
+## 🛠️ Tech Stack
+- **Frontend:** React.js (Vite)
+- **Styling:** Tailwind CSS, Lucide React (Icons)
+- **Database & Auth:** Firebase (Firestore & Authentication)
+- **State Management:** React Context API (AuthContext, LanguageContext)
+- **Animations:** Framer Motion
+- **Alerts:** React Hot Toast
+
+---
+
+## ⚙️ Local Setup Instructions
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/WiZzard14/MaxValid-Assignment.git
+   cd maxvalid-blog-news
+   ```
+
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+3. **Set up Firebase:**
+   - The Firebase configuration is located in `src/utils/firebase.js`.
+   - Ensure your Firebase Firestore Security Rules are set to Test Mode or allow appropriate read/write access.
+
+4. **Run the development server:**
+   ```bash
+   npm run dev
+   ```
+
+5. **Open in Browser:**
+   Navigate to `http://localhost:5173`
+
+---
+
+## 📂 Folder Structure Highlights
+- `/src/pages` - Contains all main pages (Dashboard, BlogManagement, PublicBlog, etc.)
+- `/src/components` - Reusable layout components (AdminLayout, PublicLayout)
+- `/src/utils` - Core logic (firebase.js, storage.js, AuthContext.js)
+- `/src/data` - Fallback mock data
+
+---
+*Developed as part of the MaxValid Assignment.*
