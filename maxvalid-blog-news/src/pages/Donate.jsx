@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { motion } from "motion/react";
-import { Heart } from "lucide-react";
+import { Heart, CreditCard, Lock } from "lucide-react";
 import PublicLayout from "../components/PublicLayout";
+import { motion } from "motion/react";
+import toast from "react-hot-toast";
 
 export default function Donate() {
   const [amount, setAmount] = useState("");
@@ -65,7 +66,16 @@ export default function Donate() {
               </div>
             </div>
             
-            <button className="w-full mt-10 py-4 bg-[#00a8ff] text-white rounded-xl font-bold text-lg shadow-lg hover:bg-[#0097e6] transition-colors" onClick={() => alert(amount ? `Donation of $${amount} Successful! (Demo)` : "Please enter an amount!")}>
+            <button 
+              className="w-full mt-10 py-4 bg-[#00a8ff] text-white rounded-xl font-bold text-lg shadow-lg hover:bg-[#0097e6] transition-colors" 
+              onClick={() => {
+                if (amount) {
+                  toast.success(`Donation of $${amount} Successful! (Demo)`);
+                } else {
+                  toast.error("Please enter an amount!");
+                }
+              }}
+            >
               Donate Now
             </button>
           </div>

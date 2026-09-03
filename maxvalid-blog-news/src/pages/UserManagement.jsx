@@ -11,6 +11,7 @@ export default function UserManagement() {
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [openMenuId, setOpenMenuId] = useState(null);
+  const [isSaving, setIsSaving] = useState(false);
   
   // Stores the user being added or edited
   const [currentUser, setCurrentUser] = useState(null);
@@ -46,6 +47,7 @@ export default function UserManagement() {
     e.preventDefault();
     if (!currentUser.name || !currentUser.email) return;
 
+    setIsSaving(true);
     try {
       if (currentUser.id) {
         // Edit existing user
@@ -68,6 +70,8 @@ export default function UserManagement() {
     } catch (error) {
       console.error(error);
       toast.error(`Error saving user: ${error.message}`);
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -256,10 +260,12 @@ export default function UserManagement() {
                   <option value="Inactive">Inactive</option>
                 </select>
               </div>
-              <div className="pt-4 flex justify-end gap-3">
-                <button type="button" onClick={() => setIsModalOpen(false)} className="px-4 py-2 border border-gray-200 text-gray-600 rounded-md hover:bg-gray-50">Cancel</button>
-                <button type="submit" className="px-4 py-2 bg-blue-500 text-white font-medium rounded-md hover:bg-blue-600 shadow-sm">{currentUser.id ? "Update User" : "Save User"}</button>
-              </div>
+                <div className="pt-4 flex justify-end gap-3">
+                  <button type="button" onClick={() => setIsModalOpen(false)} className="px-4 py-2 border border-gray-200 text-gray-600 rounded-md hover:bg-gray-50">Cancel</button>
+                  <button type="submit" disabled={isSaving} className="px-4 py-2 bg-blue-500 text-white font-medium rounded-md hover:bg-blue-600 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed">
+                    {isSaving ? "Saving..." : (currentUser.id ? "Update User" : "Save User")}
+                  </button>
+                </div>
             </form>
           </div>
         </div>

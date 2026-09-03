@@ -1,6 +1,7 @@
 import PublicLayout from '../components/PublicLayout';
 import { motion } from 'motion/react';
 import { Mail, Phone, MapPin } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 export default function Contact() {
   return (
@@ -14,7 +15,7 @@ export default function Contact() {
         <div className='grid grid-cols-1 md:grid-cols-2 gap-12'>
           <div className='bg-white p-10 rounded-3xl shadow-sm border border-gray-100'>
             <h3 className='text-2xl font-bold text-gray-800 mb-6'>Send us a message</h3>
-            <form className='space-y-4' onSubmit={(e) => { e.preventDefault(); alert('Message sent!'); }}>
+            <form className='space-y-4' onSubmit={(e) => { e.preventDefault(); toast.success('Message sent successfully!'); e.target.reset(); }}>
               <div>
                 <label className='block text-sm font-medium text-gray-700 mb-1'>Your Name</label>
                 <input type='text' className='w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#00a8ff]/50' placeholder='John Doe' required />
