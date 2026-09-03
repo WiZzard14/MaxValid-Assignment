@@ -20,6 +20,7 @@ import TermsOfService from "./pages/TermsOfService";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import { LanguageProvider } from "./utils/LanguageContext";
 import { AuthProvider, useAuth } from "./utils/AuthContext";
+import { Toaster } from "react-hot-toast";
 
 const ProtectedRoute = () => {
   const { user, isAdmin } = useAuth();
@@ -46,6 +47,7 @@ function App() {
   return (
     <LanguageProvider>
       <AuthProvider>
+        <Toaster position="top-right" />
         <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />

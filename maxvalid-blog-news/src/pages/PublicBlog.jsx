@@ -4,6 +4,7 @@ import { getPosts } from "../utils/storage";
 import { useAuth } from "../utils/AuthContext";
 import { motion, AnimatePresence } from "motion/react";
 import PublicLayout from "../components/PublicLayout";
+import toast from "react-hot-toast";
 
 export default function PublicBlog() {
   const [posts, setPosts] = useState([]);
@@ -33,7 +34,7 @@ export default function PublicBlog() {
   const toggleSave = (post, e) => {
     e?.stopPropagation();
     if (!user) {
-      alert("Please log in to save articles!");
+      toast.error("Please log in to save articles!");
       return;
     }
     
@@ -41,8 +42,10 @@ export default function PublicBlog() {
     let newSaved;
     if (isSaved) {
       newSaved = savedArticles.filter(p => p.id !== post.id);
+      toast.success("Article removed from saved list");
     } else {
       newSaved = [...savedArticles, post];
+      toast.success("Article saved successfully!");
     }
     
     setSavedArticles(newSaved);

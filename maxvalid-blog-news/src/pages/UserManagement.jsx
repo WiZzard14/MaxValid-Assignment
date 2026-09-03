@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import AdminLayout from "../components/admin/AdminLayout";
 import { Plus, MoreVertical, Shield, User as UserIcon, Search, Trash2, Edit } from "lucide-react";
 import { getUsers, addUser, updateUser, deleteUser } from "../utils/storage";
+import toast from "react-hot-toast";
 
 export default function UserManagement() {
   const [users, setUsers] = useState([]);
