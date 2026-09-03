@@ -45,23 +45,27 @@ export default function UserManagement() {
     e.preventDefault();
     if (!currentUser.name || !currentUser.email) return;
 
-    if (currentUser.id) {
-      // Edit existing user
-      await updateUser(currentUser.id, currentUser);
-      setUsers(users.map(u => u.id === currentUser.id ? currentUser : u));
-    } else {
-      // Add new user
-      const newDoc = await addUser({
-        name: currentUser.name,
-        email: currentUser.email,
-        role: currentUser.role,
-        status: currentUser.status
-      });
-      setUsers([newDoc, ...users]);
+    try {
+      if (currentUser.id) {
+        // Edit existing user
+        await updateUser(currentUser.id, currentUser);
+        setUsers(users.map(u => u.id === currentUser.id ? currentUser : u));
+      } else {
+        // Add new user
+        const newDoc = await addUser({
+          name: currentUser.name,
+          email: currentUser.email,
+          role: currentUser.role,
+          status: currentUser.status
+        });
+        setUsers([newDoc, ...users]);
+      }
+      setIsModalOpen(false);
+      setCurrentUser(null);
+    } catch (error) {
+      console.error(error);
+      alert(`Error saving user: ${error.message}\n\nPlease check your Firestore Database Rules in the Firebase Console and ensure they allow write access (Test Mode).`);
     }
-    
-    setIsModalOpen(false);
-    setCurrentUser(null);
   };
 
   const filteredUsers = users.filter((u) =>
