@@ -4,9 +4,19 @@ import { User, Mail, Calendar, Heart, Bookmark, Award } from "lucide-react";
 import { motion } from "motion/react";
 import { useLanguage } from "../utils/LanguageContext";
 
+import { useState, useEffect } from "react";
+
 export default function UserDashboard() {
   const { user } = useAuth();
   const { t } = useLanguage();
+  const [savedCount, setSavedCount] = useState(0);
+
+  useEffect(() => {
+    if (user?.email) {
+      const saved = JSON.parse(localStorage.getItem(`saved_${user.email}`)) || [];
+      setSavedCount(saved.length);
+    }
+  }, [user]);
 
   if (!user) return null;
 
@@ -46,7 +56,7 @@ export default function UserDashboard() {
                 <Bookmark size={24} />
               </div>
               <h3 className="text-lg font-bold text-gray-800">{t("Saved Articles", "সেভ করা আর্টিকেল")}</h3>
-              <p className="text-3xl font-black text-gray-900 mt-2">0</p>
+              <p className="text-3xl font-black text-gray-900 mt-2">{savedCount}</p>
               <p className="text-sm text-gray-500 mt-1">{t("Explore our blog", "আমাদের ব্লগ পড়ুন")}</p>
             </motion.div>
 

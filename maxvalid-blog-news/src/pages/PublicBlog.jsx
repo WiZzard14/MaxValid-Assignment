@@ -1,17 +1,19 @@
 import { useState, useEffect } from "react";
-import { Search } from "lucide-react";
+import { Search, ExternalLink, Bookmark, BookmarkCheck } from "lucide-react";
 import { getPosts } from "../utils/storage";
+import { useAuth } from "../utils/AuthContext";
 import { motion, AnimatePresence } from "motion/react";
 import PublicLayout from "../components/PublicLayout";
 
 export default function PublicBlog() {
-  const [searchTerm, setSearchTerm] = useState("");
   const [posts, setPosts] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All Gallery & Media");
-  const [currentPage, setCurrentPage] = useState(1);
   const [selectedPost, setSelectedPost] = useState(null);
-  
+  const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
+  const { user } = useAuth();
+  const [savedArticles, setSavedArticles] = useState([]);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -20,6 +22,32 @@ export default function PublicBlog() {
     };
     fetchPosts();
   }, []);
+
+  useEffect(() => {
+    if (user?.email) {
+      const saved = JSON.parse(localStorage.getItem(`saved_${user.email}`)) || [];
+      setSavedArticles(saved);
+    }
+  }, [user]);
+
+  const toggleSave = (post, e) => {
+    e?.stopPropagation();
+    if (!user) {
+      alert("Please log in to save articles!");
+      return;
+    }
+    
+    const isSaved = savedArticles.some(p => p.id === post.id);
+    let newSaved;
+    if (isSaved) {
+      newSaved = savedArticles.filter(p => p.id !== post.id);
+    } else {
+      newSaved = [...savedArticles, post];
+    }
+    
+    setSavedArticles(newSaved);
+    localStorage.setItem(`saved_${user.email}`, JSON.stringify(newSaved));
+  };
 
   const dummyCategories = [
     "All Gallery & Media", "Blood Donation", "Tree Plantation", "Education & Student Support",
@@ -83,8 +111,19 @@ export default function PublicBlog() {
                   <div className="md:w-[55%] h-64 md:h-auto bg-gray-200 relative">
                     {featured.image && <img src={featured.image} alt={featured.title} className="absolute inset-0 w-full h-full object-cover" />}
                   </div>
-                  <div className="p-8 md:p-10 md:w-[45%] flex flex-col justify-center">
-                    <h3 className="text-2xl font-bold text-gray-800 mb-4 group-hover:text-blue-500 transition-colors leading-snug">{featured.title}</h3>
+                  <div className="p-8 md:p-10 md:w-[45%] flex flex-col justify-center relative">
+                    <button 
+                      onClick={(e) => toggleSave(featured, e)}
+                      className="absolute top-8 right-8 text-gray-400 hover:text-blue-500 transition-colors z-10"
+                      title="Save Article"
+                    >
+                      {savedArticles.some(p => p.id === featured.id) ? (
+                        <BookmarkCheck size={24} className="text-blue-500" />
+                      ) : (
+                        <Bookmark size={24} />
+                      )}
+                    </button>
+                    <h3 className="text-2xl font-bold text-gray-800 mb-4 group-hover:text-blue-500 transition-colors leading-snug pr-8">{featured.title}</h3>
                     <p className="text-gray-600 mb-6 text-sm leading-relaxed">{featured.excerpt}</p>
                     <div className="text-sm text-gray-500">{featured.date}</div>
                   </div>
@@ -145,7 +184,20 @@ export default function PublicBlog() {
                     <div className="p-5 flex-1 flex flex-col">
                       <h3 className="text-lg font-bold text-gray-800 mb-2 group-hover:text-[#00a8ff] transition-colors line-clamp-2 leading-snug">{post.title}</h3>
                       <p className="text-gray-600 mb-4 text-sm line-clamp-3 flex-1 leading-relaxed">{post.excerpt}</p>
-                      <div className="text-xs text-gray-400 font-medium">{post.date}</div>
+                      <div className="flex items-center justify-between">
+                        <div className="text-xs text-gray-400 font-medium">{post.date}</div>
+                        <button 
+                          onClick={(e) => toggleSave(post, e)}
+                          className="text-gray-400 hover:text-blue-500 transition-colors z-10"
+                          title="Save Article"
+                        >
+                          {savedArticles.some(p => p.id === post.id) ? (
+                            <BookmarkCheck size={18} className="text-blue-500" />
+                          ) : (
+                            <Bookmark size={18} />
+                          )}
+                        </button>
+                      </div>
                     </div>
                   </motion.article>
                 ))
@@ -224,9 +276,21 @@ export default function PublicBlog() {
               </div>
               
               <div className="p-8 md:p-10">
-                <div className="flex items-center gap-4 mb-4">
-                  <span className="px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-xs font-bold uppercase tracking-wider">{selectedPost.category}</span>
-                  <span className="text-gray-500 text-sm font-medium">{selectedPost.date}</span>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-4">
+                    <span className="px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-xs font-bold uppercase tracking-wider">{selectedPost.category}</span>
+                    <span className="text-gray-500 text-sm font-medium">{selectedPost.date}</span>
+                  </div>
+                  <button 
+                    onClick={(e) => toggleSave(selectedPost, e)}
+                    className="flex items-center gap-2 text-gray-500 hover:text-blue-500 transition-colors"
+                  >
+                    {savedArticles.some(p => p.id === selectedPost.id) ? (
+                      <><BookmarkCheck size={20} className="text-blue-500" /> <span className="text-sm font-medium text-blue-500">Saved</span></>
+                    ) : (
+                      <><Bookmark size={20} /> <span className="text-sm font-medium">Save Article</span></>
+                    )}
+                  </button>
                 </div>
                 
                 <h2 className="text-3xl font-bold text-gray-800 mb-6 leading-tight">{selectedPost.title}</h2>
