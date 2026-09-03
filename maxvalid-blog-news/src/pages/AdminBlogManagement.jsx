@@ -206,25 +206,54 @@ export default function AdminBlogManagement() {
 
       {/* Edit Modal */}
       {editPost && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
-          <div className="bg-white rounded-lg p-6 w-full max-w-lg shadow-xl relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 overflow-y-auto">
+          <div className="bg-white rounded-lg p-6 w-full max-w-2xl shadow-xl relative my-8">
             <h3 className="text-xl font-bold mb-4">Edit Content</h3>
             <form onSubmit={handleEditSubmit} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
                 <input
                   type="text"
-                  value={editPost.title}
+                  value={editPost.title || ""}
                   onChange={(e) => setEditPost({...editPost, title: e.target.value})}
                   className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                   required
                 />
               </div>
-              <div className="flex justify-end gap-2 pt-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                  <input
+                    type="text"
+                    value={editPost.category || ""}
+                    onChange={(e) => setEditPost({...editPost, category: e.target.value})}
+                    className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Image URL</label>
+                  <input
+                    type="url"
+                    value={editPost.image || ""}
+                    onChange={(e) => setEditPost({...editPost, image: e.target.value})}
+                    className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Description (HTML/Text)</label>
+                <textarea
+                  value={editPost.body || editPost.excerpt || ""}
+                  onChange={(e) => setEditPost({...editPost, body: e.target.value})}
+                  className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 h-40"
+                  required
+                ></textarea>
+              </div>
+              <div className="flex justify-end gap-2 pt-4 border-t border-gray-100">
                 <button
                   type="button"
                   onClick={() => setEditPost(null)}
-                  className="px-4 py-2 border border-gray-300 rounded hover:bg-gray-50"
+                  className="px-4 py-2 border border-gray-300 rounded text-gray-700 hover:bg-gray-50"
                 >
                   Cancel
                 </button>

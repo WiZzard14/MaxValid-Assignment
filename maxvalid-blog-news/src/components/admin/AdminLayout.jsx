@@ -69,7 +69,7 @@ export default function AdminLayout({ children }) {
             </div>
           )}
           <div>
-            <p className="text-sm font-bold text-gray-800">{user?.displayName || "Super Admin"}</p>
+            <p className="text-sm font-bold text-gray-800">{user?.displayName || (user?.email ? user.email.split('@')[0] : "Admin")}</p>
             <p className="text-xs text-gray-500 truncate w-32">{user?.email || "admin@example.com"}</p>
           </div>
         </div>

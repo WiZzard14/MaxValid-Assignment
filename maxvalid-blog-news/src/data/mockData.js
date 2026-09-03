@@ -4,144 +4,219 @@ export const blogPosts = [
     title: "Mega Blood Donation Camp 2026",
     date: "Sept 10, 2026",
     category: "Blood Donation",
-    image: "https://images.unsplash.com/photo-1615461066841-6116e61058f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=800&q=80",
     excerpt: "Over 500 bags of blood were collected to support local hospitals and thalassemia patients.",
+    body: "<p>We successfully organized a mega blood donation camp this week. Over 500 generous donors came forward. The collected blood bags were distributed among local hospitals and thalassemia patients. We thank all our volunteers and medical staff for making this event a grand success.</p><h2>Why Donate Blood?</h2><p>Blood donation is a life-saving act. A single donation can save up to three lives. We encourage everyone to donate blood regularly.</p>",
     sourceLink: "https://example.com/post/1",
-    featured: false
-  },  {
+    featured: true
+  },
+  {
     id: 2,
     title: "Planting 10,000 Trees in Rural Areas",
     date: "Sept 11, 2026",
     category: "Tree Plantation",
-    image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=800&q=80",
     excerpt: "A massive initiative to fight climate change and ensure a greener future for the next generation.",
+    body: "<p>Climate change is a global crisis, and afforestation is one of the most effective solutions. Our volunteers worked tirelessly to plant 10,000 saplings across multiple rural areas.</p><p>We focused on native species that provide shade, fruits, and timber to the local communities while restoring the ecological balance.</p>",
     sourceLink: "https://example.com/post/2",
     featured: false
-  },  {
+  },
+  {
     id: 3,
     title: "Free Books Distributed to 500 Students",
     date: "Sept 12, 2026",
     category: "Education & Student Support",
-    image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=800&q=80",
     excerpt: "Ensuring that no student is left behind due to a lack of educational materials.",
+    body: "<p>Education is a fundamental right. We distributed free textbooks, notebooks, and stationery items to 500 underprivileged students.</p><ul><li>Mathematics textbooks</li><li>Science kits</li><li>Art supplies</li></ul><p>We believe these tools will help them focus on their studies and build a brighter future.</p>",
     sourceLink: "https://example.com/post/3",
-    featured: false
-  },  {
+    featured: true
+  },
+  {
     id: 4,
     title: "Vocational Training for Rural Women",
     date: "Sept 13, 2026",
     category: "Women Empowerment",
-    image: "https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?auto=format&fit=crop&w=800&q=80",
     excerpt: "Empowering women with sewing and handicraft skills to help them achieve financial independence.",
+    body: "<p>Our vocational training program has successfully trained 50 rural women in tailoring and handicrafts.</p><p>We also provided them with sewing machines so they can start their own small businesses from home. Financial independence is the first step towards true empowerment.</p>",
     sourceLink: "https://example.com/post/4",
     featured: false
-  },  {
+  },
+  {
     id: 5,
-    title: "Wheelchairs Provided to the Disable",
+    title: "Wheelchairs Provided to the Disabled",
     date: "Sept 14, 2026",
     category: "Disability Support",
-    image: "https://images.unsplash.com/photo-1596701062080-60b5dcb99c4c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1596701062080-60b5dcb99c4c?auto=format&fit=crop&w=800&q=80",
     excerpt: "Donated 50 modern wheelchairs to individuals to help them regain mobility and confidence.",
+    body: "<p>Mobility shouldn't be a luxury. We distributed 50 custom-fitted wheelchairs to individuals with physical disabilities.</p><p>The joy and independence they felt was truly heartwarming. We are committed to creating a more inclusive and accessible world.</p>",
     sourceLink: "https://example.com/post/5",
     featured: false
-  },  {
+  },
+  {
     id: 6,
-    title: "Building a New Community Center",
-    date: "Sept 15, 2026",
-    category: "Community Development",
-    image: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    excerpt: "A safe space for villagers to gather, learn, and discuss local developmental projects.",
-    sourceLink: "https://example.com/post/6",
-    featured: false
-  },  {
-    id: 7,
-    title: "Youth Seminar on Drug Prevention",
+    title: "Flood Relief Camp: Providing Emergency Rations",
     date: "Sept 16, 2026",
-    category: "Anti-Drug Awareness",
-    image: "https://images.unsplash.com/photo-1574853046757-b2ebbbcd1878?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    excerpt: "Educating the youth on the severe dangers of substance abuse and promoting healthy lifestyles.",
+    category: "Emergency Relief",
+    image: "https://images.unsplash.com/photo-1544027993-37db48d5f696?auto=format&fit=crop&w=800&q=80",
+    excerpt: "Our disaster response team distributed emergency food and water supplies to 2,000 flood victims.",
+    body: "<p>The recent floods devastated many homes. Our quick response team immediately set up a relief camp.</p><p>We provided dry rations, clean drinking water, and essential medicines to over 2,000 affected individuals. The rebuilding process will be long, but we stand with them.</p>",
+    sourceLink: "https://example.com/post/6",
+    featured: true
+  },
+  {
+    id: 7,
+    title: "Winter Clothes Distribution for the Helpless",
+    date: "Dec 05, 2026",
+    category: "Help the Helpless",
+    image: "https://images.unsplash.com/photo-1489980557514-251d61e3eeb6?auto=format&fit=crop&w=800&q=80",
+    excerpt: "Providing warm blankets and jackets to street dwellers to survive the harsh winter.",
+    body: "<p>Winter can be brutal for those without a roof. Our volunteers spent the night distributing thick blankets and warm jackets to hundreds of homeless people across the city.</p>",
     sourceLink: "https://example.com/post/7",
     featured: false
-  },  {
+  },
+  {
     id: 8,
-    title: "Educational Tour for Orphans",
-    date: "Sept 17, 2026",
-    category: "Travel & Tour Management",
-    image: "https://images.unsplash.com/photo-1501555088652-021faa106b9b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    excerpt: "Taking 100 orphans on a guided tour to historical sites to broaden their horizons.",
+    title: "Youth Volunteer Orientation Program",
+    date: "Aug 20, 2026",
+    category: "Volunteer Work",
+    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=80",
+    excerpt: "Training 100 new enthusiastic youth volunteers to lead community development projects.",
+    body: "<p>We are thrilled to welcome 100 new youth volunteers to our organization. The orientation program covered leadership, disaster management, and community outreach.</p>",
     sourceLink: "https://example.com/post/8",
     featured: false
-  },  {
+  },
+  {
     id: 9,
-    title: "Emergency Flood Relief in Sylhet",
-    date: "Sept 18, 2026",
-    category: "Disaster",
-    image: "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    excerpt: "Distributed dry food, medicines, and essential supplies to 2,000 families affected by flash floods.",
+    title: "Free Medical Checkup Camp",
+    date: "July 15, 2026",
+    category: "Health Care",
+    image: "https://images.unsplash.com/photo-1576091160550-2173ff9e5ee5?auto=format&fit=crop&w=800&q=80",
+    excerpt: "Organized a free medical camp offering checkups, medicines, and eye tests.",
+    body: "<p>Access to healthcare is a challenge in rural areas. Our free medical camp served over 800 patients, providing them with general checkups, prescribed medicines, and eye tests.</p>",
     sourceLink: "https://example.com/post/9",
     featured: true
-  },  {
+  },
+  {
     id: 10,
-    title: "Spreading Warmth in Northern Districts",
-    date: "Sept 19, 2026",
-    category: "Blanket Distribution During Winter",
-    image: "https://images.unsplash.com/photo-1544717305-2782549b5136?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    excerpt: "Distributed 5,000 thick blankets to the extreme poor during the severe cold wave.",
+    title: "Clean Drinking Water Project",
+    date: "June 10, 2026",
+    category: "Community Development",
+    image: "https://images.unsplash.com/photo-1541888078696-932fceb3c3b0?auto=format&fit=crop&w=800&q=80",
+    excerpt: "Installed 5 deep tube wells in water-scarce regions.",
+    body: "<p>Clean water means better health. We successfully installed 5 deep tube wells, providing safe drinking water to over 300 families.</p>",
     sourceLink: "https://example.com/post/10",
     featured: false
-  },  {
+  },
+  {
     id: 11,
-    title: "Ramadan Iftar for the Needy",
-    date: "Sept 20, 2026",
-    category: "Iftar Distribution",
-    image: "https://images.unsplash.com/photo-1593113630400-ea4288922497?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    excerpt: "Provided daily hot iftar meals to over 500 fasting individuals throughout the holy month.",
+    title: "Orphanage Support Initiative",
+    date: "May 02, 2026",
+    category: "Child Welfare",
+    image: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=800&q=80",
+    excerpt: "Donated food supplies and organized educational games for children at the local orphanage.",
+    body: "<p>We spent a wonderful day at the Hope Orphanage. Our team donated a month's worth of food supplies and spent hours playing educational games with the children.</p>",
     sourceLink: "https://example.com/post/11",
     featured: false
-  },  {
+  },
+  {
     id: 12,
-    title: "Winter Clothes for Street Children",
-    date: "Sept 21, 2026",
-    category: "Winter Clothing Distribution",
-    image: "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    excerpt: "Handed out sweaters and jackets to children living on the streets to protect them from the cold.",
+    title: "Women's Health Awareness Seminar",
+    date: "Mar 08, 2026",
+    category: "Women Empowerment",
+    image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=800&q=80",
+    excerpt: "Educating rural women about personal hygiene and maternal health.",
+    body: "<p>On International Women's Day, we hosted a seminar focused on maternal health, nutrition, and personal hygiene, distributing free health kits to all attendees.</p>",
     sourceLink: "https://example.com/post/12",
     featured: false
-  },  {
+  },
+  {
     id: 13,
-    title: "Installing 50 Tube Wells",
-    date: "Sept 22, 2026",
-    category: "Safe Drinking Water",
-    image: "https://images.unsplash.com/photo-1538300342682-14070a25697c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    excerpt: "Ensuring access to safe and clean drinking water for remote villages suffering from water scarcity.",
+    title: "Stray Animal Rescue Drive",
+    date: "Feb 14, 2026",
+    category: "Animal Welfare",
+    image: "https://images.unsplash.com/photo-1548767797-d8c844163c4c?auto=format&fit=crop&w=800&q=80",
+    excerpt: "Rescued and provided medical care to 20 injured stray dogs.",
+    body: "<p>Compassion extends to all living beings. Our animal welfare unit rescued 20 injured stray dogs, provided them with immediate veterinary care, and moved them to a shelter.</p>",
     sourceLink: "https://example.com/post/13",
     featured: false
-  },  {
+  },
+  {
     id: 14,
-    title: "Qurbani Meat Distribution",
-    date: "Sept 23, 2026",
-    category: "Qurbani for Everyone",
-    image: "https://images.unsplash.com/photo-1628191140046-24e0fec7ae95?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    excerpt: "Ensured that impoverished families could also celebrate Eid by distributing fresh Qurbani meat.",
+    title: "Scholarships for Merit Students",
+    date: "Jan 20, 2026",
+    category: "Education & Student Support",
+    image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=800&q=80",
+    excerpt: "Awarded full scholarships to 10 outstanding students from low-income families.",
+    body: "<p>We believe financial constraints shouldn't stop brilliance. We awarded full scholarships to 10 top-performing students to support their higher education dreams.</p>",
     sourceLink: "https://example.com/post/14",
-    featured: false
-  },  {
+    featured: true
+  },
+  {
     id: 15,
-    title: "Monthly Ration for 100 Families",
-    date: "Sept 24, 2026",
-    category: "Food Distribution",
-    image: "https://images.unsplash.com/photo-1593113630400-ea4288922497?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    excerpt: "Delivering essential groceries including rice, lentils, and oil to struggling families.",
+    title: "Awareness Campaign Against Child Marriage",
+    date: "Nov 18, 2025",
+    category: "Child Welfare",
+    image: "https://images.unsplash.com/photo-1509099836639-18ba1795216d?auto=format&fit=crop&w=800&q=80",
+    excerpt: "Conducting community dialogues to stop the practice of child marriage.",
+    body: "<p>Our volunteers engaged with community leaders and parents across 5 villages to discuss the legal and health implications of child marriage, aiming to protect young girls' futures.</p>",
     sourceLink: "https://example.com/post/15",
     featured: false
-  },  {
+  },
+  {
     id: 16,
-    title: "IT Skills for Unemployed Youth",
-    date: "Sept 25, 2026",
-    category: "Skills Development Training",
-    image: "https://images.unsplash.com/photo-1543269865-cbf427effbad?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    excerpt: "A comprehensive 3-month bootcamp teaching basic computer and freelancing skills.",
+    title: "Senior Citizens Day Care Event",
+    date: "Oct 01, 2025",
+    category: "Elderly Care",
+    image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=800&q=80",
+    excerpt: "Organized a day of joy, games, and medical checkups for senior citizens at the local old age home.",
+    body: "<p>We spent the day listening to their stories, sharing meals, and ensuring they felt loved. A free health camp was also conducted tailored for geriatric care.</p>",
     sourceLink: "https://example.com/post/16",
     featured: false
-  },];
-
+  },
+  {
+    id: 17,
+    title: "Coastal Cleanup Drive",
+    date: "Sep 22, 2025",
+    category: "Environment",
+    image: "https://images.unsplash.com/photo-1618477461853-cf6ed80fbea5?auto=format&fit=crop&w=800&q=80",
+    excerpt: "Removed 2 tons of plastic waste from the city's main beach in a massive volunteer drive.",
+    body: "<p>Protecting marine life is crucial. Our team of 200 volunteers worked together to remove plastic bottles, nets, and wrappers, ensuring a cleaner coastline.</p>",
+    sourceLink: "https://example.com/post/17",
+    featured: true
+  },
+  {
+    id: 18,
+    title: "IT Skills Training for Youth",
+    date: "Aug 15, 2025",
+    category: "Education & Student Support",
+    image: "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=80",
+    excerpt: "Provided basic computer literacy and coding workshops for 50 marginalized youths.",
+    body: "<p>In the digital age, computer skills are essential. We provided a one-month intensive training program focusing on basic IT skills and intro to web development.</p>",
+    sourceLink: "https://example.com/post/18",
+    featured: false
+  },
+  {
+    id: 19,
+    title: "Nutritious Meals for Slum Children",
+    date: "Jul 10, 2025",
+    category: "Help the Helpless",
+    image: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=800&q=80",
+    excerpt: "Distributed 1,000 hot, nutritious meals to children living in urban slums.",
+    body: "<p>Combating child malnutrition is one of our key missions. We prepared and distributed healthy meals packed with essential vitamins and proteins to 1,000 children.</p>",
+    sourceLink: "https://example.com/post/19",
+    featured: false
+  },
+  {
+    id: 20,
+    title: "Solar Panel Installation in Remote Village",
+    date: "Jun 05, 2025",
+    category: "Community Development",
+    image: "https://images.unsplash.com/photo-1509391366360-515439fb15eb?auto=format&fit=crop&w=800&q=80",
+    excerpt: "Brought electricity to 50 households by installing off-grid solar panels.",
+    body: "<p>Light changes everything. By installing solar panels, children can now study at night, and households have a reliable source of clean energy.</p>",
+    sourceLink: "https://example.com/post/20",
+    featured: true
+  }
+];
