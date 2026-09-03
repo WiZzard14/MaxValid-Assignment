@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from "react-router-dom";
+import ScrollToTop from "./components/ScrollToTop";
 import AdminBlogManagement from "./pages/AdminBlogManagement";
 import CreateNewBlog from "./pages/CreateNewBlog";
 import PublicBlog from "./pages/PublicBlog";
@@ -49,7 +50,8 @@ function App() {
       <AuthProvider>
         <Toaster position="top-right" />
         <BrowserRouter>
-        <Routes>
+          <ScrollToTop />
+          <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/causes" element={<Causes />} />
           <Route path="/events" element={<Events />} />
