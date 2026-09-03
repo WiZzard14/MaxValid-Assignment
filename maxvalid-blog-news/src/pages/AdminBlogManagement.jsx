@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Search, Plus, MoreVertical, ExternalLink, Trash2, Edit } from "lucide-react";
 import AdminLayout from "../components/admin/AdminLayout";
 import { getPosts, deletePost, updatePost } from "../utils/storage";
+import toast from "react-hot-toast";
 
 export default function AdminBlogManagement() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -22,8 +23,16 @@ export default function AdminBlogManagement() {
   }, []);
 
   const handleDelete = async (id) => {
-    await deletePost(id);
-    setPosts(posts.filter(p => p.id !== id));
+    if (window.confirm("Are you sure you want to delete this content?")) {
+      try {
+        await deletePost(id);
+        setPosts(posts.filter((post) => post.id !== id));
+        toast.success("Content deleted successfully!");
+      } catch (error) {
+        console.error(error);
+        toast.error("Failed to delete content");
+      }
+    }
     setOpenMenuId(null);
   };
 
@@ -31,12 +40,13 @@ export default function AdminBlogManagement() {
     e.preventDefault();
     if (!editPost) return;
     try {
-      await updatePost(editPost.id, { title: editPost.title });
-      setPosts(posts.map(p => p.id === editPost.id ? { ...p, title: editPost.title } : p));
+      await updatePost(editPost.id, editPost);
+      setPosts(posts.map(p => p.id === editPost.id ? editPost : p));
       setEditPost(null);
+      toast.success("Content updated successfully!");
     } catch (error) {
       console.error(error);
-      alert("Failed to update post");
+      toast.error("Failed to update content");
     }
   };
 

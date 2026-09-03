@@ -61,11 +61,13 @@ export default function UserManagement() {
         });
         setUsers([newDoc, ...users]);
       }
+      
+      toast.success(currentUser.id ? "User updated successfully!" : "User added successfully!");
       setIsModalOpen(false);
       setCurrentUser(null);
     } catch (error) {
       console.error(error);
-      alert(`Error saving user: ${error.message}\n\nPlease check your Firestore Database Rules in the Firebase Console and ensure they allow write access (Test Mode).`);
+      toast.error(`Error saving user: ${error.message}`);
     }
   };
 

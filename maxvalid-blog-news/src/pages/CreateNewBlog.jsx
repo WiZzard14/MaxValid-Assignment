@@ -4,6 +4,7 @@ import { Image as ImageIcon, X, UploadCloud } from "lucide-react";
 import AdminLayout from "../components/admin/AdminLayout";
 import { motion, AnimatePresence } from "motion/react";
 import { addPost } from "../utils/storage";
+import toast from "react-hot-toast";
 
 export default function CreateNewBlog() {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ export default function CreateNewBlog() {
   const handleFileChange = (file) => {
     if (file) {
       if (file.size > 5 * 1024 * 1024) {
-        alert("Image must be smaller than 5MB");
+        toast.error("Image must be smaller than 5MB");
         return;
       }
       setSelectedImage(URL.createObjectURL(file));
@@ -69,10 +70,11 @@ export default function CreateNewBlog() {
         featured: false,
         sourceLink: "#"
       });
+      toast.success("Content published successfully!");
       navigate("/admin/blogs");
     } catch (error) {
       console.error("Error creating post", error);
-      alert("Failed to create post. Check console for details.");
+      toast.error("Failed to create post. Check console for details.");
     }
   };
 
